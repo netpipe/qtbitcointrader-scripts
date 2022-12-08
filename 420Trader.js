@@ -8,6 +8,7 @@
 //increasing volume could mean to sell at the high (pump detector)
 //if 10 min volume is going up then put sell order at the top when volume decreases for a period of time?
 
+//old floor average trend, peak detector, trend ahead of other exchanges
   //             -----   ~~~Store this value as SellCeiling
  //            /       \ 
 //            /         \

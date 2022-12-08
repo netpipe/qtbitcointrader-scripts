@@ -1,0 +1,72 @@
+var executed=false;
+function executeRule()
+{
+ executed=true;
+ if(trader.get("ApiLag")>10)
+ {
+ trader.log("Api lag is to high");
+ trader.delay(1,"executeRule()");
+ return;
+ }
+
+ var amount = trader.get("Balance","BTC");
+
+ var price = trader.get("BTCUSDexchange" , "LastMyBuyPrice");
+ price += price * 0.008;
+
+ trader.sell("BTCUSDexchange" , amount , price);
+ trader.groupDone();
+}
+
+var baseVariable = calcBaseVariable();
+function calcBaseVariable()
+{
+ baseVariable = trader.get("BTCUSDexchange" , "LastMyBuyPrice");
+ baseVariable += baseVariable*0.01;
+ return baseVariable;
+}
+
+trader.on("LastPrice").changed()
+{
+ if(executed)return;
+ if(symbol != "BTCUSDexchange")return;
+ calcBaseVariable();
+ if(value <= baseVariable) executeRule();
+}
+
+and
+var executed=false;
+function executeRule()
+{
+ executed=true;
+ if(trader.get("ApiLag")>10)
+ {
+ trader.log("Api lag is to high");
+ trader.delay(1,"executeRule()");
+ return;
+ }
+
+ var amount = trader.get("Balance","USD");
+
+ var price = trader.get("BTCUSDexchange" , "LastPrice");
+ price -= price * 0.01;
+
+ trader.buy("BTCUSDexchange" , amount / price , price);
+ trader.groupDone();
+}
+
+var baseVariable = calcBaseVariable();
+function calcBaseVariable()
+{
+ baseVariable = trader.get("BTCUSDexchange" , "LastMySellPrice");
+ baseVariable += baseVariable*0.01;
+ return baseVariable;
+}
+
+trader.on("LastPrice").changed()
+{
+ if(executed)return;
+ if(symbol != "BTCUSDexchange")return;
+ calcBaseVariable();
+ if(value <= baseVariable) executeRule();
+}

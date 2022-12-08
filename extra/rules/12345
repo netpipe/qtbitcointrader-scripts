@@ -1,0 +1,50 @@
+var baseVariable = calcBaseVariable();
+function calcBaseVariable()
+{
+ baseVariable = trader.get("BTCUSD" , "LastMyBuyPrice");
+ baseVariable += baseVariable*0.01;
+ return baseVariable;
+}
+
+trader.on("BidPrice").changed()
+{
+ if(symbol != "BTCUSD")return;
+ calcBaseVariable();
+ if(value > baseVariable)
+ {
+ var amount = 0.01;
+
+ var price = trader.get("BTCUSD" , "LastMyBuyPrice");
+ price += price * 0.0000000001;
+
+ trader.sell("BTCUSD" , amount , price);
+ trader.groupDone();
+ }
+}
+
+
+
+
+trader.say("Current price is",trader.get("LastPrice"));
+
+trader.on("LastPrice").changed()
+{
+trader.say("Current price is",value);
+}
+
+
+
+
+https://bitcointalk.org/index.php?topic=201062.1140
+ trader.timer(0.2,"1% Down");
+
+or 
+
+ trader.timer(0.2);
+ trader.groupStart("1% Down");
+
+
+The trader.timer I am unsure if I can skip the function call. I could always create a blank function. I think neither will work.
+
+trader.delay(0.2,"trader.groupStart('1% Down')"); will works for you, 0.2 is 200 ms
+
