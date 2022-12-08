@@ -22,7 +22,7 @@
  
 
 
-
+//ashi=(Open+High+Low+Close)/4
 var ashi=( trader.get("AskPrice")+trader.get("HighPrice")+trader.get("LowPrice")+ trader.get("BidPrice"))/4;
 trader.log(ashi);
     var balanceBTC = trader.get("Balance","BTC");
