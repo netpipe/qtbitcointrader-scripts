@@ -99,7 +99,7 @@ trader.on("BidPrice").changed()
 
 //trader.sell(20,0.00000770);
 
-
+//var temp = trader.fileReadAll(lastTradeStatusFile).toString().trim();
 //trader.get("BidPrice")
 //trader.get("HighPrice")trader.get("LowPrice")
 //trader.get("LastPrice")
